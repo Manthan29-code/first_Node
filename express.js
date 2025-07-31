@@ -11,7 +11,7 @@ app.get('/manthan', (req, res) => {
 })
 
 app.post('/postData' , (req , res) =>{
-        res.send(" response received ")
+      res.send(' response received ')
 })
 
 app.listen(port, () => {
