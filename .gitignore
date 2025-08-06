@@ -2,4 +2,3 @@ node_modules/
 .env
 evv
 *.txt
-auth.js

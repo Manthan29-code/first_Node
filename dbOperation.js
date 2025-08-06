@@ -5,7 +5,7 @@ const PersonRoute = require('./routes/personRoute')
 const menuRoute = require('./routes/menuRoute')
 const bodyParser = require('body-parser')
 require('dotenv').config()
-// const passport = require("./auth")
+const passport = require("./auth")
 
 app.use((req, res, next) => {
     if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
@@ -35,10 +35,10 @@ const logRequest =( req  , res  , next)=>{
   next()
 }
 
-// app.use(passport.initialize())
-// const localAuthMiddleware= passport.authenticate( 'local' , { session : false})
+app.use(passport.initialize())
+const localAuthMiddleware= passport.authenticate( 'local' , { session : false})
 
-app.get('/manthan', (req, res) => {
+app.get('/manthan', localAuthMiddleware , (req, res) => {
   console.log("responce header" , req.headers)
   res.send('Hello World! \nHow can i help manthan ??')
 })

@@ -36,36 +36,36 @@ const personSchema = new mongoose.Schema({
    }
 })
 
-// personSchema.pre( 'save' , async function (next){
-//      const person =this
+personSchema.pre( 'save' , async function (next){
+     const person =this
 
-//      if(!person.isModified('password')){
-//           console.log(" Password field is not modified")
-//           return next()
-//      } 
+     if(!person.isModified('password')){
+          console.log(" Password field is not modified")
+          return next()
+     } 
 
-//      try{
-//           console.log(" Password field is  modified")
-//           console.log("Original password " , person.password)
-//           const salt = await bcrypt.genSalt(10);
-//           const hashPassword = await bcrypt.hash(person.password , salt)
-//           console.log("hashed password " , hashPassword)
-//           person.password = hashPassword 
-//           next()
+     try{
+          console.log(" Password field is  modified")
+          console.log("Original password " , person.password)
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(person.password , salt)
+          console.log("hashed password " , hashPassword)
+          person.password = hashPassword 
+          next()
 
-//      }catch(e){
-//           return next(err); 
-//      }
-// })
+     }catch(e){
+          return next(err); 
+     }
+})
 
-// personSchema.methods.comparePassword = async function (candidatePassword){
-//      try{
-//           const isMatch = await bcrypt.compare( candidatePassword , this.password)
-//           return isMatch
-//      }catch(err){
-//           throw err
-//      }
-// }
+personSchema.methods.comparePassword = async function (candidatePassword){
+     try{
+          const isMatch = await bcrypt.compare( candidatePassword , this.password)
+          return isMatch
+     }catch(err){
+          throw err
+     }
+}
 
 const Person = mongoose.model( 'Person'  , personSchema)
 module.exports = Person
