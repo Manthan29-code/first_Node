@@ -74,5 +74,5 @@ module.exports = Person
 //     "password": "$2b$10$GyIqEPizwtPcb55dLllfb.77iSJVdHlh2QcrVvcpSMThyZtCwSezu","Alice@Smith"
 
 
-// "username" : "John_Doe",
+// "username" : "John_Doe"
 //         "password" : 1245
