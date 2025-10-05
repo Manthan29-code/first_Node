@@ -1,12 +1,10 @@
 const express = require('express')
-const db = require('./db')
+const db = require('./config/db')
 const PersonRoute = require('./routes/personRoute')
 const menuRoute = require('./routes/menuRoute')
 const bodyParser = require('body-parser')
-const passport = require("./auth")
+const passport = require("./middleware/auth")
 require('dotenv').config()
-
-
 
 const app = express()
 
@@ -72,7 +70,7 @@ app.listen(port, () => {
 app.use('/person' , PersonRoute)
 
 // Menu //
-app.use('/addMenu' , menuRoute)
+app.use('/Menu' , menuRoute)
 
 
 

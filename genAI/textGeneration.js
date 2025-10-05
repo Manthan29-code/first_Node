@@ -13,7 +13,7 @@ async function main() {
   const result = await model.generateContent(question);
   const answer = result.response.text();
 
-  fs.mkdirSync("genAl", { recursive: true });
+  // fs.mkdirSync("genAl", { recursive: true });
   fs.appendFileSync("genAl/answer.md", answer + "\n\n");
 
   console.log("Answer saved ✅\n", answer);

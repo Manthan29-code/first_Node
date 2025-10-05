@@ -1,3 +1,5 @@
+// bassi server set up //
+
 const express = require('express')
 const app = express()
 const port = 3000
@@ -11,6 +13,7 @@ app.get('/manthan', (req, res) => {
 })
 
 app.post('/postData' , (req , res) =>{
+      console.table(req.body)
       res.send(' response received ')
 })
 

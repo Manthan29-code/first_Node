@@ -17,7 +17,7 @@ router.post( '/' , async (req , res)=>{
 
 router.get('/' , async (req , res ) => {
     try{  
-        const response =await  MenuItem.find()
+        const response =await MenuItem.find()
         console.log(" data fetched")
         res.status(200).json(response)
 
