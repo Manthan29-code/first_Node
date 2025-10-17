@@ -84,4 +84,4 @@ userSchema.methods.generateRefresHToken = function(){
 }
 const User = mongoose.model('User' , userSchema)
 
- module.exports = User
+ module.exports = {User}
