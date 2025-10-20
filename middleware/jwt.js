@@ -7,12 +7,12 @@ const verifyJWT = asyncHandler( async (req , _ , next ) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer " , "")
         if(!token){
-            throw new ApiError(401 , "UnauthoriZe user")
+            throw new ApiError(401 , "Unauthorize user")
         }
 
         const decodedToken  = jwt.verify( token , process.env.ACCESS_TOKEN_SECRET)
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
-         if (!user) {
+        if (!user) {
             
             throw new ApiError(401, "Invalid Access Token")
         }
@@ -24,6 +24,7 @@ const verifyJWT = asyncHandler( async (req , _ , next ) => {
     
     }
 })
+
 const jwtAuthMiddleware = ( req , res, next)=>{
 
     //first Check request headers has authorization or not 
