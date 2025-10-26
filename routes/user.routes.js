@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router();
-const { registerUser } = require('../controller/user.controller')
+const { registerUser , loginUser , logoutUser } = require('../controller/user.controller')
 const upload = require("../middleware/multerMiddleware")
-// const { verifyJWT } = require("../middleware/jwt")
+const { verifyJWT } = require("../middleware/jwt")
 
 const uploadFields = upload.fields([
     {
@@ -16,5 +16,7 @@ const uploadFields = upload.fields([
 ])
 
 router.post('/register' , uploadFields , registerUser )
+router.post('/login' , loginUser )
+router.get('/logout' , verifyJWT ,logoutUser )
 
 module.exports = router
