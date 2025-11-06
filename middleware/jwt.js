@@ -30,4 +30,4 @@ const generateToken = ( userData)=>{
     return jwt.sign(userData , process.env.JWT_TOKEN , {expiresIn : 30000})
 }
 
-module.exports = { jwtAuthMiddleware , generateToken , verifyJWT}
+module.exports = {  generateToken , verifyJWT}

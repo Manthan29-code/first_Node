@@ -2,7 +2,7 @@ const { User } = require("../models/user.model")
 const { ApiError}  = require("../utils/ApiError")
 const { asyncHandler }  = require("../utils/asyncHandler")
 const { ApiResponse}  = require("../utils/ApiResponse")
-const { uploadCloudinary } = require("../utils/cloudinary")
+const { uploadCloudinary  , removeOldImage} = require("../utils/cloudinary")
 const jwt = require('jsonwebtoken')
 const { default: mongoose } = require("mongoose")
 
@@ -152,6 +152,9 @@ const loginUser = asyncHandler( async (req, res ) => {
 
 const logoutUser = asyncHandler( async ( req, res ) => {
     console.log("inside logoutUser")
+    if(!req.user){
+        throw new ApiError(401, "your are already loggedOut")
+    }
     await User.findByIdAndUpdate(
         req.user._id ,
         {
@@ -173,7 +176,7 @@ const logoutUser = asyncHandler( async ( req, res ) => {
     .status(200)
     .clearCookie( "accessToken" , option)
     .clearCookie( "refreshToken" , option)
-    .json(new ApiResponse(200, {}, "User logged Out"))
+    .json(new ApiResponse(200, req.user.username, "User  logged Out"))
 
 })
 
@@ -292,8 +295,14 @@ const updateUserAvatar = asyncHandler(async (req , res ) => {
         throw new ApiError(400, "Avatar file is missing")
     }
 
-    const avatar = await uploadCloudinary(avatarLocalPath)
+    if(req.user.avatar) { 
+       const result = await removeOldImage(req.user.avatar)
+       console.log( "old image deleted " , result)
+    }
 
+
+    const avatar = await uploadCloudinary(avatarLocalPath)
+ 
     if (!avatar.url) {
         throw new ApiError(400, "Error while uploading on avatar") 
     }
@@ -318,10 +327,15 @@ const updateUserAvatar = asyncHandler(async (req , res ) => {
 })
 
 //=========================================Update Cover Image ==================================//
+
+
 const updateCoverImage = asyncHandler(async (req , res ) => {
 
     const coverImageLocalPath = req.file?.path
-
+    if(req.user.coverImage) { 
+       const result = await removeOldImage(req.user.coverImage)
+       console.log( "old image deleted " , result)
+    }
     if (!coverImageLocalPath) {
         throw new ApiError(400, "cover Image file is missing")
     }
@@ -352,6 +366,7 @@ const updateCoverImage = asyncHandler(async (req , res ) => {
 })
 
 //===========================================ChannelProfile =====================================//
+
 
 const getUserChannelProfile = asyncHandler( async ( req , res) => {
     const { username } = req.prams 
