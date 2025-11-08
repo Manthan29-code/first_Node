@@ -22,7 +22,7 @@ const videoSchema = new mongoose.Schema({
         type : Number ,
         require : true ,
     },
-     views: {
+    views:{
         type: Number,
         default: 0
     },
@@ -35,3 +35,8 @@ const videoSchema = new mongoose.Schema({
         ref: "User"
     }
 } , {timestamps : true})
+
+videoSchema.plugin(mongooseAggregatePaginate)
+
+const Video = mongoose.model('Video', videoSchema)
+module.exports = {Video}
