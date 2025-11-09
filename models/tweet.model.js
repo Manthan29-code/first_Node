@@ -1,13 +1,16 @@
 const mongoose = require('mongoose')
 
-const tweetSchema = new Schema({
+const tweetSchema = new mongoose.Schema({
     content: {
         type: String,
-        required: true
+        required: true,
+        trim : true 
+
     },
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User", 
+        require : true 
     }
 }, { timestamps: true })
 const Tweet = mongoose.model("Tweet", tweetSchema)
