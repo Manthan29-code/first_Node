@@ -20,20 +20,26 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     )
 
     if (existingSubScription) {
-        await Like.findByIdAndDelete(existingSubScription._id)
-        return res.status(200).json({
-            message: "subscription removed ",
-            isSubscribed: false,
-        })
+        await Subscription.findByIdAndDelete(existingSubScription._id)
+        return res.status(200).json(new ApiResponse( 200 , 
+            {
+                message: "subscription removed ",
+                isSubscribed: false,
+            }
+            , "subscription removed successfully"
+        ))
     } else {
         await Subscription.create({
             subscriber: userId,
             channel: channelId,
         });
-        return res.status(200).json({
-            message: "subscription added ",
-            isSubscribed: true,
-        });
+        return res.status(200).json(new ApiResponse(200,
+            {
+                message: "subscription added ",
+                isSubscribed: true,
+            }
+            , "subscription added successfully"
+        ));
     }
     
 })
