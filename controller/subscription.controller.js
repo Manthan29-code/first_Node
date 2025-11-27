@@ -49,8 +49,8 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     const { channelId } = req.params
 
-    if (!mongoose.isValidObjectId(channelId)) {
-        throw new ApiError(400, "Invalid channelId")
+    if ( !channelId || !mongoose.isValidObjectId(channelId)) {
+        throw new ApiError(400, "Invalid channelId ")
     }
 
     const subscriberList = await Subscription.find({ channel: channelId }).populate("subscriber", "username email avatar");
