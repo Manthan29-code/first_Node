@@ -3,11 +3,13 @@ const mongoose = require('mongoose')
 const playlistSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        trim : true
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        trim : true 
     },
     videos: [
         {
