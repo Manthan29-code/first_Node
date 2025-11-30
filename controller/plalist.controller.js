@@ -1,7 +1,4 @@
-const { Like } = require("../models/like.model")
-const { Video } = require("../models/video.model")
 const { Playlist } = require("../models/playlist.model")
-const { Subscription } = require("../models/subscription.model")
 const { ApiError } = require("../utils/ApiError")
 const { asyncHandler } = require("../utils/asyncHandler")
 const { ApiResponse } = require("../utils/ApiResponse")
@@ -123,6 +120,22 @@ const updatePlaylist = asyncHandler(async (req, res) => {
     const { playlistId } = req.params
     const { name, description } = req.body
     //TODO: update playlist
+    if ( !name || !description ){
+        throw new ApiError(400 , "name or description is missing" )
+    }
+    const newPlaylist = await Playlist.findByIdAndUpdate(playlistId , {
+        name : name , 
+        description: description,
+    } , 
+    {new : true }
+    )
+    if(newPlaylist){
+        res.status(202).json(new ApiResponse(202 , {
+            newPlaylist: newPlaylist
+        } , 
+        "playlist created "
+    ))
+    }
 })
 
 export {
